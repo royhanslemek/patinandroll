@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nota Pemesanan</title>
+  <style>
+    /* Styling untuk nota */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .nota-container {
+      background-color: #f8f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .nota-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .nota-container p {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    .nota-container img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .nota-container .order-details {
+      margin-top: 20px;
+    }
+
+    .nota-container .order-details p {
+      font-size: 1rem;
+    }
+
+    .nota-container .download-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #ffc107;
+      color: #333;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+
+    .nota-container .download-button:hover {
+      background-color: #e0a800;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nota-container">
+    <h2>Nota Pemesanan</h2>
+    <div id="order-summary">
+      <!-- Rincian pesanan akan dimasukkan di sini -->
+    </div>
+    <a href="#" class="download-button" id="download-nota">Unduh Nota</a>
+  </div>
+
+  <script>
+    // Mengambil data dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get("name");
+    const price = urlParams.get("price");
+    const description = urlParams.get("description");
+    const image = urlParams.get("image");
+
+    // Menampilkan rincian pesanan
+    const orderSummary = document.getElementById("order-summary");
+    if (name && price && description && image) {
+      orderSummary.innerHTML = `
+        <h3>${name}</h3>
+        <img src="${image}" alt="${name}">
+        <p><strong>Harga:</strong> ${price}</p>
+        <p><strong>Deskripsi:</strong> ${description}</p>
+      `;
+    } else {
+      orderSummary.innerHTML = "<p>Data pesanan tidak ditemukan.</p>";
+    }
+
+    // Fungsi untuk mengunduh nota (simulasi, ini bisa diganti dengan logic backend untuk mengunduh PDF atau file lain)
+    document.getElementById("download-nota").addEventListener("click", function(event) {
+      event.preventDefault();
+      const notaData = {
+        name,
+        price,
+        description,
+        image
+      };
+
+      // Simulasi mengunduh nota (misalnya sebagai file JSON)
+      const blob = new Blob([JSON.stringify(notaData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = 'nota-${name}.json';
+      link.click();
+    });
+  </script>
+</body>
+
+</html>

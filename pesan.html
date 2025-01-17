@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pemesanan Sayuran Ibu</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #e67e22;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #d35400;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Isi Pemesanan</h2>
+    <form id="order-form">
+      <label for="name">Nama:</label>
+      <input type="text" id="name" required placeholder="Masukkan nama lengkap">
+
+      <label for="whatsapp">WhatsApp:</label>
+      <input type="text" id="whatsapp" required placeholder="Masukkan nomor WhatsApp">
+
+      <label for="address">Alamat:</label>
+      <textarea id="address" required placeholder="Masukkan alamat pengiriman"></textarea>
+
+      <button type="submit">Pesan</button>
+    </form>
+  </div>
+
+  <script>
+    // Data produk sementara
+    const productData = {
+      name: "Sayuran Segar",
+      price: "Rp 20.000",
+      description: "Sayuran organik dan segar.",
+    };
+
+    document.getElementById("order-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const whatsapp = document.getElementById("whatsapp").value;
+      const address = document.getElementById("address").value;
+
+      if (name && whatsapp && address) {
+        // Membuat pesan untuk WhatsApp
+        const message = `Halo, saya ingin memesan:
+Produk: ${productData.name}
+Harga: ${productData.price}
+Nama: ${name}
+WhatsApp: ${whatsapp}
+Alamat: ${address}`;
+
+        const waLink = 'https://wa.me/message/7EBWKNFWUM37G1?text=${encodeURIComponent(message)}';
+
+        // Membuka WhatsApp dengan pesan
+        window.open(waLink, "_blank");
+      }
+    });
+  </script>
+</body>
+</html>
